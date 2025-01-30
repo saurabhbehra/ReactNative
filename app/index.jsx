@@ -8,11 +8,13 @@ import { data } from "@/data/todos"
 import { Inter_500Medium, useFonts } from "@expo-google-fonts/inter";
 import Octicons from '@expo/vector-icons/Octicons'
 import { StatusBar } from "expo-status-bar";
+import { useRouter } from "expo-router";
 
 
 export default function Index() {
   const [todos, setTodos] = useState(data.sort((a, b) => b.id - a.id))
   const [text, setText] = useState('')
+  const router = useRouter()
 
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext)
 
@@ -46,7 +48,8 @@ export default function Index() {
     <View style={styles.todoItem}>
       <Text
         style={[styles.todoText, item.completed && styles.completedText]}
-        onPress={() => toggleTodo(item.id)}
+        onLongPress={() => toggleTodo(item.id)}
+        onPress={()=>router.push(`/todos/${item.id}`)}
       >
         {item.title}
       </Text>
